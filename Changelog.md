@@ -1,6 +1,7 @@
 ### 0.4.22 (unreleased)
 
 Features:
+ * General: Allow providing reason string for ``revert()``.
 
 
 Bugfixes:
