@@ -59,3 +59,12 @@ As an example, neither ``mload`` nor ``mstore`` would be allowed.
 ## Unused Declaration Pruner
 
 ## Function Unifier
+
+## Expression Simplifier
+
+This step can only be applied for the EVM-flavoured dialect of iulia. It applies
+simple rules like ``x + 0 == x`` to simplify expressions.
+
+## Ineffective Statement Remover
+
+This step removes statements that have no side-effects.
