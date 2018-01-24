@@ -864,8 +864,6 @@ BOOST_AUTO_TEST_CASE(cyclic_inheritance)
 		contract A is B { }
 		contract B is A { }
 	)";
-	// Error (TypeError): Definition of base has to precede definition of derived contract
-	// Warning: Use of var keyword is deprecated
 	CHECK_ERROR_ALLOW_MULTI(text, TypeError, "Definition of base has to precede definition of derived contract");
 }
 
@@ -4862,27 +4860,22 @@ BOOST_AUTO_TEST_CASE(warn_about_callcode)
 	char const* text = R"(
 		contract test {
 			function f() pure public {
-				var x = address(0x12).callcode;
+				bool x = address(0x12).callcode;
 				x;
 			}
 		}
 	)";
-	// Warning: Use of var keyword is deprecated
-	// Warning: "callcode" has been deprecated in favour of "delegatecall"
-	CHECK_WARNING_ALLOW_MULTI(text, "Use of var keyword is deprecated");
+	CHECK_WARNING(text, "\"callcode\" has been deprecated in favour of \"delegatecall\"");
 	text = R"(
 		pragma experimental "v0.5.0";
 		contract test {
 			function f() pure public {
-				var x = address(0x12).callcode;
+				bool x = address(0x12).callcode;
 				x;
 			}
 		}
 	)";
-    // Warning: Experimental features are turned on
-	// Warning: Use of var keyword is deprecated
-	// Warning: "callcode" has been deprecated in favour of "delegatecall"
-	CHECK_WARNING_ALLOW_MULTI(text, "Experimental features are turned on");
+	CHECK_ERROR(text, TypeError, "\"callcode\" has been deprecated in favour of \"delegatecall\"");
 }
 
 BOOST_AUTO_TEST_CASE(no_warn_about_callcode_as_function)
@@ -6869,7 +6862,7 @@ BOOST_AUTO_TEST_CASE(function_types_sig)
 			}
 		}
 	)";
-	CHECK_WARNING(text, "Use of var keyword is deprecated");
+	CHECK_SUCCESS_NO_WARNINGS(text);
 	text = R"(
 		contract C {
 			function h() pure external {
@@ -7304,14 +7297,12 @@ BOOST_AUTO_TEST_CASE(warn_about_sha3)
 	char const* text = R"(
 		contract test {
 			function f() pure public {
-				var x = sha3(uint8(1));
+				bytes32 x = sha3(uint8(1));
 				x;
 			}
 		}
 	)";
-	// Warning: Use of var keyword is deprecated
-	// Warning: "sha3" has been deprecated in favour of "keccak256"
-	CHECK_WARNING_ALLOW_MULTI(text, "Use of var keyword is deprecated");
+	CHECK_WARNING(text, "\"sha3\" has been deprecated in favour of \"keccak256\"");
 }
 
 BOOST_AUTO_TEST_CASE(warn_about_suicide)

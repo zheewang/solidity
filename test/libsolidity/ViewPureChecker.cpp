@@ -102,47 +102,43 @@ BOOST_AUTO_TEST_CASE(write_storage_fail)
 
 BOOST_AUTO_TEST_CASE(environment_access)
 {
-	vector<string> view{
-		"block.coinbase",
-		"block.timestamp",
-		"block.blockhash(7)",
-		"block.difficulty",
-		"block.number",
-		"block.gaslimit",
-		"msg.gas",
-		"msg.value",
-		"msg.sender",
-		"tx.origin",
-		"tx.gasprice",
-		"this",
-		"address(1).balance"
+	vector<pair<string, string>> view{
+		{ "address", "block.coinbase" },
+		{ "uint", "block.timestamp" },
+		{ "bytes32", "block.blockhash(7)" },
+		{ "uint", "block.difficulty" },
+		{ "uint", "block.number" },
+		{ "uint", "block.gaslimit" },
+		{ "uint", "msg.gas" },
+		{ "uint", "msg.value" },
+		{ "address", "msg.sender" },
+		{ "address", "tx.origin" },
+		{ "uint", "tx.gasprice" },
+		{ "address", "this" },
+		{ "uint256", "address(1).balance" }
 	};
-	vector<string> pure{
-		"msg.data",
-		"msg.data[0]",
-		"msg.sig",
-		"block.blockhash", // Not evaluating the function
-		"msg",
-		"block",
-		"tx"
+	vector<pair<string, string>> pure{
+		{ "bytes storage", "msg.data" },
+		{ "bytes1", "msg.data[0]" },
+		{ "bytes4", "msg.sig" },
+		{ "bytes32", "block.blockhash" }, // Not evaluating the function
+		{ "bytes storage", "msg" },
+		{ "bytes storage", "block" },
+		{ "bytes storage", "tx" }
 	};
-	for (string const& x: view)
+	for (pair<string, string> const& x: view)
 	{
-	    // Warning: Use of var keyword is deprecated
-	    // Error (TypeError):
-		//	Function declared as pure, but this expression (potentially) reads from the environment or state and thus requires "view"
-		CHECK_WARNING_ALLOW_MULTI(
-			"contract C { function f() pure public { var x = " + x + "; x; } }",
-			"Use of var keyword is deprecated"
+		CHECK_ERROR(
+			"contract C { function f() pure public { " + x.first + " x = " + x.second + "; x; } }",
+			TypeError,
+			"Function declared as pure, but this expression (potentially) reads from the environment or state and thus requires \"view\""
 		);
 	}
-	for (string const& x: pure)
+	for (pair<string, string> const& x: pure)
 	{
-	    // Warning: Use of var keyword is deprecated
-	    // Warning: restricted to pure
-		CHECK_WARNING_ALLOW_MULTI(
-			"contract C { function f() view public { var x = " + x + "; x; } }",
-			"Use of var keyword is deprecated"
+		CHECK_WARNING(
+			"contract C { function f() view public { " + x.first + " x = " + x.second + "; x; } }",
+			"restricted to pure"
 		);
 	}
 }
