@@ -128,17 +128,21 @@ BOOST_AUTO_TEST_CASE(environment_access)
 	};
 	for (string const& x: view)
 	{
-		CHECK_ERROR(
+	    // Warning: Use of var keyword is deprecated
+	    // Error (TypeError):
+		//	Function declared as pure, but this expression (potentially) reads from the environment or state and thus requires "view"
+		CHECK_WARNING_ALLOW_MULTI(
 			"contract C { function f() pure public { var x = " + x + "; x; } }",
-			TypeError,
-			"Function declared as pure, but this expression (potentially) reads from the environment or state and thus requires \"view\""
+			"Use of var keyword is deprecated"
 		);
 	}
 	for (string const& x: pure)
 	{
-		CHECK_WARNING(
+	    // Warning: Use of var keyword is deprecated
+	    // Warning: restricted to pure
+		CHECK_WARNING_ALLOW_MULTI(
 			"contract C { function f() view public { var x = " + x + "; x; } }",
-			"restricted to pure"
+			"Use of var keyword is deprecated"
 		);
 	}
 }
@@ -292,7 +296,7 @@ BOOST_AUTO_TEST_CASE(builtin_functions)
 			function() payable public {}
 		}
 	)";
-	CHECK_SUCCESS_NO_WARNINGS(text);
+	CHECK_WARNING_ALLOW_MULTI(text, "Use of var keyword is deprecated");
 }
 
 BOOST_AUTO_TEST_CASE(function_types)
