@@ -22,22 +22,16 @@
 
 #include <libjulia/ASTDataForward.h>
 
-<<<<<<< HEAD
-=======
 #include <libdevcore/Exceptions.h>
 
->>>>>>> simplifier
 namespace dev
 {
 namespace julia
 {
 
-<<<<<<< HEAD
-=======
 struct IuliaException: virtual Exception {};
 struct OptimizerException: virtual IuliaException {};
 
->>>>>>> simplifier
 /// Removes statements that are just empty blocks (non-recursive).
 void removeEmptyBlocks(Block& _block);
 
