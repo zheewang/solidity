@@ -15,31 +15,31 @@
 	along with solidity.  If not, see <http://www.gnu.org/licenses/>.
 */
 /**
- * Small useful snippets for the optimiser.
+ * Optimiser component that uses the simplification rules to simplify expressions.
  */
 
 #pragma once
 
 #include <libjulia/ASTDataForward.h>
 
-<<<<<<< HEAD
-=======
-#include <libdevcore/Exceptions.h>
+#include <libjulia/optimiser/ASTWalker.h>
 
->>>>>>> simplifier
 namespace dev
 {
 namespace julia
 {
 
-<<<<<<< HEAD
-=======
-struct IuliaException: virtual Exception {};
-struct OptimizerException: virtual IuliaException {};
+/**
+ * Applies simplification rules to all expressions.
+ */
+class ExpressionSimplifier: public ASTModifier
+{
+public:
+	using ASTModifier::operator();
+	virtual void visit(Expression& _expression);
 
->>>>>>> simplifier
-/// Removes statements that are just empty blocks (non-recursive).
-void removeEmptyBlocks(Block& _block);
+private:
+};
 
 }
 }
