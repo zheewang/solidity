@@ -74,6 +74,14 @@ BOOST_AUTO_TEST_CASE(expression)
 	);
 }
 
+BOOST_AUTO_TEST_CASE(reassign)
+{
+	CHECK(
+		"{ let a := extcodesize(0) let b := a let c := b a := 2 let d := add(b, c) pop(a) pop(b) pop(c) pop(d) }",
+		"{ let a := extcodesize(0) let b := a let c := a a := 2 let d := add(b, c) pop(2) pop(b) pop(c) pop(add(b, c)) }"
+	);
+}
+
 BOOST_AUTO_TEST_CASE(non_movable_instr)
 {
 	CHECK(
@@ -115,6 +123,18 @@ BOOST_AUTO_TEST_CASE(branches_for)
 	CHECK(
 		"{ let a := 1 for { pop(a) } a { pop(a) } { a := 7 let c := a } let x := a }",
 		"{ let a := 1 for { pop(1) } a { pop(7) } { a := 7 let c := 7 } let x := a }"
+	);
+}
+
+BOOST_AUTO_TEST_CASE(branches_for_declared_in_init)
+{
+	CHECK(
+		"{ let b := 0 for { let a := 1 pop(a) } a { pop(a) } { b := 1 pop(a) } }",
+		"{ let b := 0 for { let a := 1 pop(1) } 1 { pop(1) } { b := 1 pop(1) } }"
+	);
+	CHECK(
+		"{ let b := 0 for { let a := 1 pop(a) } lt(a, 0) { pop(a) a := add(a, 3) } { b := 1 pop(a) } }",
+		"{ let b := 0 for { let a := 1 pop(1) } lt(a, 0) { pop(a) a := add(a, 3) } { b := 1 pop(a) } }"
 	);
 }
 
