@@ -39,12 +39,13 @@ This is just the bytecode "data" sent along with the request.
 Is there a decompiler available?
 ================================
 
-There is no decompiler to Solidity. This is in principle possible
-to some degree, but for example variable names will be lost and
-great effort will be necessary to make it look similar to
-the original source code.
+There is no exact decompiler to Solidity, but
+`Porosity <https://github.com/comaeio/porosity>`_ is close. 
+Because some information like variable names, comments, and 
+source code formatting is lost in the compilation process, 
+it is not possible to completely recover the original source code.
 
-Bytecode can be decompiled to opcodes, a service that is provided by
+Bytecode can be disassembled to opcodes, a service that is provided by
 several blockchain explorers.
 
 Contracts on the blockchain should have their original source
@@ -433,14 +434,14 @@ What happens to a ``struct``'s mapping when copying over a ``struct``?
 
 This is a very interesting question. Suppose that we have a contract field set up like such::
 
-    struct user {
+    struct User {
         mapping(string => string) comments;
     }
 
     function somefunction public {
-       user user1;
+       User user1;
        user1.comments["Hello"] = "World";
-       user user2 = user1;
+       User user2 = user1;
     }
 
 In this case, the mapping of the struct being copied over into the userList is ignored as there is no "list of mapped keys".

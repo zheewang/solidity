@@ -704,6 +704,12 @@ Contract and Library Names
 Contracts and libraries should be named using the CapWords style. Examples: ``SimpleToken``, ``SmartBank``, ``CertificateHashRepository``, ``Player``.
 
 
+Struct Names
+==========================
+
+Structs should be named using the CapWords style. Examples: ``MyCoin``, ``Position``, ``PositionXY``.
+
+
 Event Names
 ===========
 
@@ -713,7 +719,7 @@ Events should be named using the CapWords style. Examples: ``Deposit``, ``Transf
 Function Names
 ==============
 
-Functions should use mixedCase. Examples: ``getBalance``, ``transfer``, ``verifyOwner``, ``addMember``, ``changeOwner``.
+Functions other than constructors should use mixedCase. Examples: ``getBalance``, ``transfer``, ``verifyOwner``, ``addMember``, ``changeOwner``.
 
 
 Function Argument Names
