@@ -1,12 +1,14 @@
 ### 0.4.20 (unreleased)
 
 Features:
+ * Code Generator: Prevent non-view functions in libraries from being called directly.
  * Commandline interface: Support strict mode of assembly with the ``--strict--assembly`` switch.
  * Limit the number of warnings raised for creating abstract contracts.
  * Inline Assembly: Issue warning for using jump labels (already existed for jump instructions).
  * Inline Assembly: Support some restricted tokens (return, byte, address) as identifiers in Julia mode.
  * SMT Checker: If-else branch conditions are taken into account in the SMT encoding of the program
    variables.
+ * Type Checker: Issue warning for using ``public`` visibility for interface functions.
 
 Bugfixes:
  * Parser: Disallow event declarations with no parameter list.

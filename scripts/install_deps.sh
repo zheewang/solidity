@@ -84,9 +84,12 @@ case $(uname -s) in
             10.12)
                 echo "Installing solidity dependencies on macOS 10.12 Sierra."
                 ;;
+            10.13)
+                echo "Installing solidity dependencies on macOS 10.13 High Sierra."
+                ;;
             *)
                 echo "Unsupported macOS version."
-                echo "We only support Mavericks, Yosemite and El Capitan, with work-in-progress on Sierra."
+                echo "We only support Mavericks, Yosemite, El Capitan, Sierra and High Sierra."
                 exit 1
                 ;;
         esac
@@ -137,7 +140,7 @@ case $(uname -s) in
                 # All our dependencies can be found in the Arch Linux official repositories.
                 # See https://wiki.archlinux.org/index.php/Official_repositories
                 # Also adding ethereum-git to allow for testing with the `eth` client
-                sudo pacman -Sy \
+                sudo pacman -Syu \
                     base-devel \
                     boost \
                     cmake \
@@ -356,7 +359,7 @@ case $(uname -s) in
                     # Make Sure we have the EPEL repos
                     sudo yum -y install epel-release
                     # Get g++ 4.8
-                    sudo rpm --import http://ftp.scientificlinux.org/linux/scientific/5x/x86_64/RPM-GPG-KEYs/RPM-GPG-KEY-cern
+                    sudo rpm --import http://linuxsoft.cern.ch/cern/slc6X/i386/RPM-GPG-KEY-cern
                     wget -O /etc/yum.repos.d/slc6-devtoolset.repo http://linuxsoft.cern.ch/cern/devtoolset/slc6-devtoolset.repo
                     sudo yum -y install devtoolset-2-gcc devtoolset-2-gcc-c++ devtoolset-2-binutils
 
