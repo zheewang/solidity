@@ -45,7 +45,7 @@ class AnalysisFramework
 {
 
 protected:
-	virtual std::pair<SourceUnit const*, std::shared_ptr<Error const>>
+	virtual std::pair<SourceUnit const*, ErrorList>
 	parseAnalyseAndReturnError(
 		std::string const& _source,
 		bool _reportWarnings = false,
@@ -55,7 +55,7 @@ protected:
 
 	SourceUnit const* parseAndAnalyse(std::string const& _source);
 	bool success(std::string const& _source);
-	Error expectError(std::string const& _source, bool _warning = false, bool _allowMultiple = false);
+	ErrorList expectError(std::string const& _source, bool _warning = false, bool _allowMultiple = false);
 
 	std::string formatErrors();
 	std::string formatError(Error const& _error);
@@ -74,9 +74,8 @@ protected:
 #define CHECK_ERROR_OR_WARNING(text, typ, substring, warning, allowMulti) \
 do \
 { \
-	Error err = expectError((text), (warning), (allowMulti)); \
-	BOOST_CHECK(err.type() == (Error::Type::typ)); \
-	BOOST_CHECK(searchErrorMessage(err, (substring))); \
+	ErrorList errors = expectError((text), (warning), (allowMulti)); \
+	BOOST_CHECK(searchErrors(errors, (Error::Type::typ), (substring))); \
 } while(0)
 
 // [checkError(text, type, substring)] asserts that the compilation down to typechecking
@@ -107,9 +106,9 @@ do \
 { \
 	auto sourceAndError = parseAnalyseAndReturnError((text), true); \
 	std::string message; \
-	if (sourceAndError.second) \
-		message = formatError(*sourceAndError.second); \
-	BOOST_CHECK_MESSAGE(!sourceAndError.second, message); \
+	if (!sourceAndError.second.empty()) \
+		message = formatErrors();\
+	BOOST_CHECK_MESSAGE(sourceAndError.second.empty(), message); \
 } \
 while(0)
 

@@ -41,3 +41,11 @@ bool dev::solidity::searchErrorMessage(Error const& _err, std::string const& _su
 		cout << "Expected error message but found none." << endl;
 	return _substr.empty();
 }
+
+bool dev::solidity::searchErrors(ErrorList const& _errors, Error::Type _type, string const& _substr)
+{
+	for (auto const& error: _errors)
+		if (error->type() == _type && searchErrorMessage(*error, _substr))
+			return true;
+	return false;
+}

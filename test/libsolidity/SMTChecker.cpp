@@ -42,7 +42,7 @@ public:
 	}
 
 protected:
-	virtual std::pair<SourceUnit const*, std::shared_ptr<Error const>>
+	virtual std::pair<SourceUnit const*, ErrorList>
 	parseAnalyseAndReturnError(
 		std::string const& _source,
 		bool _reportWarnings = false,

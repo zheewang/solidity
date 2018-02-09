@@ -28,5 +28,6 @@ namespace dev
 namespace solidity
 {
 bool searchErrorMessage(Error const& _err, std::string const& _substr);
+bool searchErrors(ErrorList const& _errors, Error::Type _type, std::string const& _substr);
 }
 }
