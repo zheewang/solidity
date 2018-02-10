@@ -1835,9 +1835,7 @@ BOOST_AUTO_TEST_CASE(warn_var_from_zero)
 			}
 		}
 	)";
-	// Warning: Use of var keyword is deprecated
-	// Warning: uint8, which can hold values between 0 and 255
-	CHECK_WARNING_ALLOW_MULTI(sourceCode, "Use of var keyword is deprecated");
+	CHECK_WARNING_ALLOW_MULTI(sourceCode, "uint8, which can hold values between 0 and 255");
 	sourceCode = R"(
 		contract test {
 			function f() pure public {
@@ -1846,9 +1844,7 @@ BOOST_AUTO_TEST_CASE(warn_var_from_zero)
 			}
 		}
 	)";
-	// Warning: Use of var keyword is deprecated
-	// Warning: uint256, which can hold values between 0 and 115792089237316195423570985008687907853269984665640564039457584007913129639935
-	CHECK_WARNING_ALLOW_MULTI(sourceCode, "Use of var keyword is deprecated");
+	CHECK_WARNING_ALLOW_MULTI(sourceCode, "uint256, which can hold values between 0 and 115792089237316195423570985008687907853269984665640564039457584007913129639935");
 	sourceCode = R"(
 		contract test {
 			function f() pure public {
@@ -1857,9 +1853,7 @@ BOOST_AUTO_TEST_CASE(warn_var_from_zero)
 			}
 		}
 	)";
-	// Warning: Use of var keyword is deprecated
-	// Warning: int8, which can hold values between -128 and 127
-	CHECK_WARNING_ALLOW_MULTI(sourceCode, "Use of var keyword is deprecated");
+	CHECK_WARNING_ALLOW_MULTI(sourceCode, "int8, which can hold values between -128 and 127");
 	sourceCode = R"(
 		 contract test {
 			 function f() pure public {
@@ -1867,9 +1861,7 @@ BOOST_AUTO_TEST_CASE(warn_var_from_zero)
 			 }
 		 }
 	)";
-	// Warning: Use of var keyword is deprecated
-	// Warning: uint8, which can hold
-	CHECK_WARNING_ALLOW_MULTI(sourceCode, "Use of var keyword is deprecated");
+	CHECK_WARNING_ALLOW_MULTI(sourceCode, "uint8, which can hold values between 0 and 255");
 }
 
 BOOST_AUTO_TEST_CASE(enum_member_access)
@@ -4860,8 +4852,7 @@ BOOST_AUTO_TEST_CASE(warn_about_callcode)
 	char const* text = R"(
 		contract test {
 			function f() pure public {
-				bool x = address(0x12).callcode;
-				x;
+				address(0x12).callcode;
 			}
 		}
 	)";
@@ -4870,8 +4861,7 @@ BOOST_AUTO_TEST_CASE(warn_about_callcode)
 		pragma experimental "v0.5.0";
 		contract test {
 			function f() pure public {
-				bool x = address(0x12).callcode;
-				x;
+				address(0x12).callcode;
 			}
 		}
 	)";
@@ -6859,17 +6849,6 @@ BOOST_AUTO_TEST_CASE(function_types_sig)
 		contract C {
 			function f() view external returns (bytes4) {
 				return this.f.selector;
-			}
-		}
-	)";
-	CHECK_SUCCESS_NO_WARNINGS(text);
-	text = R"(
-		contract C {
-			function h() pure external {
-			}
-			function f() view external returns (bytes4) {
-				var g = this.h;
-				return g.selector;
 			}
 		}
 	)";

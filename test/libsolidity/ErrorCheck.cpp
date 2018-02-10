@@ -45,7 +45,11 @@ bool dev::solidity::searchErrorMessage(Error const& _err, std::string const& _su
 bool dev::solidity::searchErrors(ErrorList const& _errors, Error::Type _type, string const& _substr)
 {
 	for (auto const& error: _errors)
-		if (error->type() == _type && searchErrorMessage(*error, _substr))
+		if (error->type() == _type && error->comment() && error->comment()->find(_substr) != string::npos)
 			return true;
+	cout << "Expected error message \"" << _substr << "\" not found or wrong type of errror." << endl;
+	for (auto const& error: _errors)
+		if (error->comment())
+			cout << "Message: " << *error->comment() << endl;
 	return false;
 }
