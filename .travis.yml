@@ -104,7 +104,6 @@ matrix:
               - nvm install 7
               - nvm use 7
               - docker pull trzeci/emscripten:sdk-tag-1.37.21-64bit
-              - docker run -v $(pwd):/root/project -w /root/project trzeci/emscripten:sdk-tag-1.37.21-64bit emcc --clear-cache
           env:
               - EMCC_DEBUG=1
               - SOLC_EMSCRIPTEN=On
