@@ -1,6 +1,7 @@
 ### 0.4.22 (unreleased)
 
 Features:
+ * Interfaces: Allow overriding external functions in interfaces with public in an implementing contract.
 
 
 Bugfixes:
