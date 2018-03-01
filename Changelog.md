@@ -1,10 +1,15 @@
+### 0.5.0 (unreleased)
+
+Features:
+ * Adds new reserved keywords: ``alias``, ``apply``, ``auto``, ``const``, ``constructor``, ``define``, ``fallback``,
+   ``immutable``, ``implements``, ``macro``, ``mutable``, ``override``, ``promise``, ``reference``, ``sealed``,
+   ``sizeof``, ``supports``, ``topic``, ``typedef`` and ``unchecked``.
+
 ### 0.4.22 (unreleased)
 
 Features:
 
-
 Bugfixes:
-
 
 
 ### 0.4.21 (2018-03-07)
