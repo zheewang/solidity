@@ -1,7 +1,7 @@
 ### 0.4.22 (unreleased)
 
 Features:
-
+ * General: Introduce new constructor syntax using the ``constructor`` keyword as experimental 0.5.0 feature.
 
 Bugfixes:
 
