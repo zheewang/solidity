@@ -1242,13 +1242,7 @@ BOOST_AUTO_TEST_CASE(new_constructor_syntax)
 	char const* text = R"(
 		contract A { constructor() public {} }
 	)";
-	CHECK_SUCCESS(text);
-
-	text = R"(
-		pragma experimental "v0.5.0";
-		contract A { constructor() public {} }
-	)";
-	CHECK_SUCCESS(text);
+	CHECK_SUCCESS_NO_WARNINGS(text);
 }
 
 BOOST_AUTO_TEST_CASE(old_constructor_syntax)
