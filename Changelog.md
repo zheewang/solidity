@@ -1,6 +1,7 @@
 ### 0.4.22 (unreleased)
 
 Features:
+ * Code Generator: More specialized and thus optimized implementation for ``x.push(...)``
 
 
 Bugfixes:
