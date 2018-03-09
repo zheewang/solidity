@@ -6685,6 +6685,19 @@ BOOST_AUTO_TEST_CASE(interface_function_external)
 	CHECK_SUCCESS(text);
 }
 
+BOOST_AUTO_TEST_CASE(interface_function_default_visibility)
+{
+	char const* text = R"(
+		interface I {
+			function f();
+		}
+	)";
+	CHECK_WARNING_ALLOW_MULTI(text, (std::vector<std::string>{
+		"No visibility specified. Defaulting to \"external\".",
+		"Functions in interfaces should be declared external."
+	}));
+}
+
 BOOST_AUTO_TEST_CASE(interface_function_public)
 {
 	char const* text = R"(
