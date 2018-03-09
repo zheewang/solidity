@@ -4798,6 +4798,25 @@ BOOST_AUTO_TEST_CASE(byte_array_push)
 	ABI_CHECK(callContractFunction("test()"), encodeArgs(false));
 }
 
+BOOST_AUTO_TEST_CASE(array_pop)
+{
+	char const* sourceCode = R"(
+		contract c {
+			uint[] data;
+			function test() public returns (uint x, uint y, uint z, uint l) {
+				data.push(5);
+				x = data.pop();
+				data.push(4);
+				y = data.pop();
+				l = data.push(3);
+				z = data.pop();
+			}
+		}
+	)";
+	compileAndRun(sourceCode);
+	ABI_CHECK(callContractFunction("test()"), encodeArgs(5, 4, 3, 3));
+}
+
 BOOST_AUTO_TEST_CASE(external_array_args)
 {
 	char const* sourceCode = R"(

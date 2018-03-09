@@ -774,6 +774,27 @@ void ArrayUtils::resizeDynamicArray(ArrayType const& _typeIn) const
 	);
 }
 
+void ArrayUtils::decrementDynamicArraySize(ArrayType const& _type) const
+{
+	solAssert(_type.location() == DataLocation::Storage, "");
+	solAssert(_type.isDynamicallySized(), "");
+	if (!_type.isByteArray() && _type.baseType()->storageBytes() < 32)
+		solAssert(_type.baseType()->isValueType(), "Invalid storage size for non-value type.");
+
+	if (_type.isByteArray())
+	{
+
+	}
+	else
+	{
+		m_context.appendInlineAssembly(R"({
+			let new_length := add(sload(ref), 1)
+			sstore(ref, new_length)
+			ref := new_length
+		})", {"ref"});
+	}
+}
+
 void ArrayUtils::clearStorageLoop(TypePointer const& _type) const
 {
 	m_context.callLowLevelFunction(

@@ -1542,6 +1542,13 @@ MemberList::MemberMap ArrayType::nativeMembers(ContractDefinition const*) const
 				strings{string()},
 				isByteArray() ? FunctionType::Kind::ByteArrayPush : FunctionType::Kind::ArrayPush
 			)});
+			members.push_back({"pop", make_shared<FunctionType>(
+				TypePointers{},
+				TypePointers{baseType()},
+				strings{string()},
+				strings{string()},
+				isByteArray() ? FunctionType::Kind::ByteArrayPop : FunctionType::Kind::ArrayPop
+			)});
 	}
 	return members;
 }
