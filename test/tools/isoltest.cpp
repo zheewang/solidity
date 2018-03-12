@@ -270,9 +270,9 @@ int main(int argc, char *argv[])
 
 	fs::path testPath;
 	po::options_description options(
-		R"(syntaxTestTool, tool for managing syntax tests.
-Usage: syntaxTestTool [Options] --testpath path
-Interactively validates syntax test files.
+		R"(isoltest, tool for interactively managing test contracts.
+Usage: isoltest [Options] --testpath path
+Interactively validates test contracts.
 
 Allowed options)",
 		po::options_description::m_default_line_length,
